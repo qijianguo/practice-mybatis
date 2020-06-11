@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qijianguo.mapper.IUserMapper">
+
+    <resultMap id="userMap" type="com.qijianguo.pojo.User">
+        <result property="id" column="uid"></result>
+        <result property="username" column="username"></result>
+
+        <collection property="orders" ofType="com.qijianguo.pojo.Order">
+            <result property="id" column="id"></result>
+            <result property="title" column="title"></result>
+            <result property="price" column="price"></result>
+            <result property="time" column="time"></result>
+        </collection>
+
+        <collection property="roles" ofType="com.qijianguo.pojo.Role">
+            <result property="id" column="rid"></result>
+            <result property="name" column="name"></result>
+        </collection>
+
+    </resultMap>
+    <select id="findUserOrderAndRole" resultMap="userMap">
+        select * from user u left join user_role ur on u.id = ur.uid left join role r on ur.rid = r.id
+    </select>
+
+    <resultMap id="roleUserMap" type="com.qijianguo.pojo.Role">
+        <result property="id" column="rid"></result>
+        <result property="name" column="name"></result>
+
+        <collection property="users" ofType="com.qijianguo.pojo.User">
+            <result property="id" column="rid"></result>
+            <result property="username" column="username"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="findRoleUser" resultMap="roleUserMap">
+        select * from user_role ur left join user u on u.id = ur.uid left join role r on ur.rid = r.id
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qijianguo.dao.IUserProxyDao">
+    <!-- sql片段抽取 -->
+    <sql id="selectUser">
+        select * from user
+    </sql>
+
+    <select id="findAll" resultType="com.qijianguo.pojo.User">
+        select * from user
+    </select>
+
+    <select id="findByCondition" parameterType="user" resultType="user">
+        select * from user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != null">
+                and username = #{username} and password = #{password}
+            </if>
+        </where>
+    </select>
+    <select id="findByIds" parameterType="java.util.List" resultType="com.qijianguo.pojo.User">
+        <include refid="selectUser"/>
+         where
+        <foreach collection="list" open="id in (" item="id" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </select>
+</mapper>
