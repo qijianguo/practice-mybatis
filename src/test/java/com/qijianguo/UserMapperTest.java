@@ -79,6 +79,16 @@ public class UserMapperTest {
         System.out.println(mapper.selectAll());
     }
 
+    @Test
+    public void selectAllUserAndRoleTest() {
+        System.out.println(mapper.selectAllUserAndRole());
+    }
+
+    @Test
+    public void selectAllUserAndRoleAndOrderTest() {
+        System.out.println(mapper.selectAllUserAndRoleAndOrder());
+    }
+
     @After
     public void after() {
         sqlSession.close();

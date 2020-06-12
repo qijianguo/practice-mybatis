@@ -34,4 +34,25 @@ public interface IUserMapper {
                 many = @Many(select = "com.qijianguo.mapper.IOrderMapper.selectByUserId"))
     })
     List<User> selectAll();
+
+    @Select(value = "select * from user")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "roles", column = "id", javaType = List.class,
+                many = @Many(select = "com.qijianguo.mapper.IRoleMapper.findRoleByUid"))
+    })
+    List<User> selectAllUserAndRole();
+
+    @Select(value = "select * from user")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "roles", column = "id", javaType = List.class,
+                    many = @Many(select = "com.qijianguo.mapper.IRoleMapper.findRoleByUid")),
+            @Result(property = "orders", column = "id", javaType = List.class,
+                    many = @Many(select = "com.qijianguo.mapper.IOrderMapper.selectByUserId"))
+    })
+
+    List<User> selectAllUserAndRoleAndOrder();
 }
